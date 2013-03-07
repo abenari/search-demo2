@@ -4,6 +4,7 @@ The socped_search is a Rails plugin that let a user easily search ActiveRecord m
 
 == The Application
 The demo application has one main pages "messages", the page includes a search box at the to try it out.
+A running version of the demo can be found here: https://demo2-scopedsearch.rhcloud.com/messages
 
 == Installation instruction
 
