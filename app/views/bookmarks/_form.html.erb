@@ -1,0 +1,20 @@
+<%= form_for @bookmark, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :query, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :query, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary', :id => 'bookmark-submit' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                bookmarks_path, :class => 'btn' %>
+  </div>
+<% end %>

@@ -1,0 +1,78 @@
+= Welcome to the Scoped Search Demo 2
+This software is all about demonstrating the capabilities and usage of the 'scoped_search' plugin http://github.com/wvanbergen/scoped_search.
+The socped_search is a Rails plugin that let a user easily search ActiveRecord models with a simple query language using a named scope. The scoped search can be used by the programmer as well as the end user. It includes a syntax auto completer to get the end users familiar with the query syntax.
+
+== The Application
+The demo application has one main pages "messages", the page includes a search box at the to try it out.
+
+== Installation instruction
+
+    $ git clone git://github.com/abenari/search-demo2.git
+    $ bundle install
+    $ rake db:migrate
+    $ rake db:seed
+
+== External resources
+Blogs:
+* abenari's blog: http://scopedsearch.wordpress.com
+* wvanbergen’s blog posts: http://techblog.floorplanner.com/tag/scoped_search
+
+== Requirements
+=== Gems
+Scoped search runs on both Rails 2 and 3.
+However this demo shows how to use the plugin with assets pipline, this demo uses Rails 3.2.
+
+== What is in demo app
+
+=== javascript and css files
+This demo uses:
+* jquery
+* jquery_ujs
+* jquery.ui.autocomplete
+* scoped_search
+* twitter/bootstrap
+
+Style sheets:
+* scoped_search
+* twitter bootstrap
+* jquery-ui twitter bootstrap theame
+
+=== Models
+The search language definition is in the "message" mode
+
+  scoped_search :on => :subject, :complete_value => :true
+  scoped_search :on => :body, :rename => 'message', :complete_value => :true
+  scoped_search :on => :sender, :rename => 'from',:complete_value => :true
+  scoped_search :on => :recipient, :rename=> 'to', :complete_value => :true
+  scoped_search :on => :read, :rename=> 'read', :complete_value => {:yes => true, :no => false}
+  scoped_search :on => :read, :rename=> 'unread', :complete_value => {:yes => false, :no => true}
+
+
+The <tt>:on</tt> mark the column name in the database, <tt>:in</tt> specify relation, <tt>:only_explicit</tt> exclude a search term from the free text search.
+The <tt>:complete_value</tt> make the auto completer suggest values to the user, <tt>:rename</tt> will rename the search term.
+
+=== Controllers
+The following two methods are used for showing the filtered list of messages and auto-complete the search syntax.
+
+    def index
+      @messages = Message.search_for(params[:search], :order => params[:order])
+
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render :json => @messages }
+      end
+    end
+
+    def auto_complete_search
+      begin
+        @items = Message.complete_for(params[:search])
+      rescue ScopedSearch::QueryNotSupported => e
+        @items = [{:error =>e.to_s}]
+      end
+      render :json => @items
+    end
+
+=== Routes
+The following lines was added to the *config/routes.rb* file
+    resources :messages do
+      get :auto_complete_search, :on => :collection

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  body: MyString
+  subject: MyString
+  from: MyString
+  to: MyString
+  read: false
+
+two:
+  body: MyString
+  subject: MyString
+  from: MyString
+  to: MyString
+  read: false
