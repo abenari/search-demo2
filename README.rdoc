@@ -18,34 +18,26 @@ Blogs:
 * wvanbergen’s blog posts: http://techblog.floorplanner.com/tag/scoped_search
 
 == Requirements
-=== Gems
 Scoped search runs on both Rails 2 and 3.
 However this demo shows how to use the plugin with assets pipline, this demo uses Rails 3.2.
 
-== What is in demo app
+== What to note in demo code
 
-=== javascript and css files
-This demo uses:
-* jquery
-* jquery_ujs
-* jquery.ui.autocomplete
-* scoped_search
-* twitter/bootstrap
+=== javascript
+    //= requier scoped_search
 
-Style sheets:
-* scoped_search
-* twitter bootstrap
-* jquery-ui twitter bootstrap theame
+=== Style sheets
+    *= requier scoped_search
 
 === Models
 The search language definition is in the "message" mode
 
-  scoped_search :on => :subject, :complete_value => :true
-  scoped_search :on => :body, :rename => 'message', :complete_value => :true
-  scoped_search :on => :sender, :rename => 'from',:complete_value => :true
-  scoped_search :on => :recipient, :rename=> 'to', :complete_value => :true
-  scoped_search :on => :read, :rename=> 'read', :complete_value => {:yes => true, :no => false}
-  scoped_search :on => :read, :rename=> 'unread', :complete_value => {:yes => false, :no => true}
+    scoped_search :on => :subject, :complete_value => :true
+    scoped_search :on => :body, :rename => 'message', :complete_value => :true
+    scoped_search :on => :sender, :rename => 'from',:complete_value => :true
+    scoped_search :on => :recipient, :rename=> 'to', :complete_value => :true
+    scoped_search :on => :read, :rename=> 'read', :complete_value => {:yes => true, :no => false}
+    scoped_search :on => :read, :rename=> 'unread', :complete_value => {:yes => false, :no => true}
 
 
 The <tt>:on</tt> mark the column name in the database, <tt>:in</tt> specify relation, <tt>:only_explicit</tt> exclude a search term from the free text search.
